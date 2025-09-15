@@ -1,0 +1,7 @@
+Package: beacn-permissions
+Version: 1.0.0
+Section: hardware
+Priority: optional
+Architecture: all
+Maintainer: Craig McLure <craig@mclure.net>
+Description: Required udev permissions for Beacn Devices

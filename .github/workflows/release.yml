@@ -1,0 +1,33 @@
+name: Create Release
+
+on:
+  push:
+   tags:
+     - 'v*'
+
+jobs:
+  build-packages:
+    name: "Build Packages"
+    uses: ./.github/workflows/build-packages.yml
+
+  do-release:
+    needs: [build-packages]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download RPM artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: rpm-package
+        
+    - name: Download DEB artifact  
+      uses: actions/download-artifact@v4
+      with:
+        name: deb-package
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          *.rpm
+          *.deb

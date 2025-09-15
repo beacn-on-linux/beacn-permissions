@@ -1,0 +1,15 @@
+# Copy this file to /etc/udev/rules.d, then run:
+# udevadm control --reload-rules
+# udevadm trigger
+
+# Beacn Mic
+SUBSYSTEM=="usb", ATTR{idVendor}=="33ae", ATTR{idProduct}=="0001", TAG+="uaccess"
+
+# Beacn Studio
+SUBSYSTEM=="usb", ATTR{idVendor}=="33ae", ATTR{idProduct}=="0003", TAG+="uaccess"
+
+# Beacn Mix
+SUBSYSTEM=="usb", ATTR{idVendor}=="33ae", ATTR{idProduct}=="0004", TAG+="uaccess"
+
+# Beacn Mix Create
+SUBSYSTEM=="usb", ATTR{idVendor}=="33ae", ATTR{idProduct}=="0007", TAG+="uaccess"

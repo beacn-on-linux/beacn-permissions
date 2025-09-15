@@ -1,0 +1,50 @@
+name: Build Packages
+on: [ workflow_dispatch, workflow_call ]
+jobs:
+  build-rpm:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    
+    steps:
+    - name: Install Git
+      run: |
+        dnf update -y
+        dnf install -y git
+
+    - uses: actions/checkout@v4
+    
+    - name: Install RPM build tools
+      run: |
+        dnf update -y
+        dnf install -y rpm-build rpmdevtools
+    
+    - name: Build RPM
+      run: |
+        git config --global --add safe.directory '*'
+        ./build-packages.sh rpm
+        
+    - name: Upload RPM artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: rpm-package
+        path: "*.rpm"
+
+  build-deb:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install DEB build tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y dpkg-dev
+        
+    - name: Build DEB
+      run: ./build-packages.sh deb
+        
+    - name: Upload DEB artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: deb-package
+        path: "*.deb"
