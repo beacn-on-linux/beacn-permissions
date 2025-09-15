@@ -27,11 +27,6 @@ error() {
 generate_versions() {
     log "Generating version from git..."
 
-    pwd
-    ls -lah
-    
-git describe --tags --always --dirty
-
     if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
         # Exact tag match - clean release
         GIT_VERSION=$(git describe --tags --exact-match HEAD)
